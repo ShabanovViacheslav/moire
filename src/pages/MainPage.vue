@@ -68,7 +68,7 @@ export default {
       setTimeout(() => {
         (async () => {
           try {
-            const responce = await axios.get(`${API_BASE_URL}products`, {
+            const response = await axios.get(`${API_BASE_URL}products`, {
               params: {
                 page: this.page,
                 limit: this.productsPerPage,
@@ -80,7 +80,7 @@ export default {
                 seasonIds: this.filterSeasonIds
               }
             })
-            this.productsData = responce.data
+            this.productsData = response.data
             this.productsLoading = false
           } catch (error) {
             this.productsLoading = false
@@ -115,6 +115,10 @@ export default {
     }
   },
   created () {
+    if (this.$route.query.categoryId) {
+      this.filterCategoryId = Number(this.$route.query.categoryId)
+      this.$router.replace({ name: 'home' })
+    }
     this.loadProductsData()
   }
 }
@@ -126,13 +130,13 @@ export default {
 }
  .loader {
   color: #e02d71;
-  font-size: 90px;
+  font-size: 20px;
   text-indent: -9999em;
   overflow: hidden;
   width: 1em;
   height: 1em;
   border-radius: 50%;
-  margin: 72px auto;
+  margin: 0 auto;
   position: relative;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);

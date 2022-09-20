@@ -69,7 +69,7 @@
   <button class="filter__submit button button--primery" type="submit">
     Применить
   </button>
-  <button class="filter__reset button button--second" type="button" @click.prevent="reset">
+  <button class="filter__reset button button--second" type="button" @click.prevent="reset" :disabled="!onView">
     Сбросить
   </button>
 </form>
@@ -95,12 +95,17 @@ export default {
       selectedMaxPrice: 0
     }
   },
+  computed: {
+    onView () {
+      return Boolean(this.selectedCategory) || Boolean(this.selectedMaterials.length) || Boolean(this.selectedSeasons.length) || Boolean(this.selectedColors.length) || Boolean(this.selectedMinPrice) || Boolean(this.selectedMaxPrice)
+    }
+  },
   methods: {
     getCategories () {
       (async () => {
         try {
-          const responce = await axios.get(`${API_BASE_URL}productCategories`)
-          this.categoriesData = responce.data.items
+          const response = await axios.get(`${API_BASE_URL}productCategories`)
+          this.categoriesData = response.data.items
         } catch (error) {
           console.error(error)
         }
@@ -109,8 +114,8 @@ export default {
     getMaterials () {
       (async () => {
         try {
-          const responce = await axios.get(`${API_BASE_URL}materials`)
-          this.materialsData = responce.data.items
+          const response = await axios.get(`${API_BASE_URL}materials`)
+          this.materialsData = response.data.items
         } catch (error) {
           console.error(error)
         }
@@ -119,8 +124,8 @@ export default {
     getSeasons () {
       (async () => {
         try {
-          const responce = await axios.get(`${API_BASE_URL}seasons`)
-          this.seasonsData = responce.data.items
+          const response = await axios.get(`${API_BASE_URL}seasons`)
+          this.seasonsData = response.data.items
         } catch (error) {
           console.error(error)
         }
@@ -129,8 +134,8 @@ export default {
     getColors () {
       (async () => {
         try {
-          const responce = await axios.get(`${API_BASE_URL}colors`)
-          this.colorsData = responce.data.items
+          const response = await axios.get(`${API_BASE_URL}colors`)
+          this.colorsData = response.data.items
         } catch (error) {
           console.error(error)
         }
@@ -151,6 +156,9 @@ export default {
       this.$emit('update:colors', [])
       this.$emit('update:minPrice', 0)
       this.$emit('update:maxPrice', 0)
+      if (this.selectedMinPrice) this.selectedMinPrice = 0
+      if (this.selectedMaxPrice) this.selectedMaxPrice = 0
+      if (this.selectedCategory) this.selectedCategory = 0
     }
   },
   watch: {
@@ -178,6 +186,7 @@ export default {
     this.getMaterials()
     this.getSeasons()
     this.getColors()
+    this.selectedCategory = this.category
   }
   // components: { BaseFormCheck }
 }

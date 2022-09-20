@@ -16,18 +16,15 @@
           8 800 600 90 09
         </a>
 
-        <a class="header__cart" href="cart.html" aria-label="Корзина с товарами">
+        <div class="loader" v-if="cartLoading">Минутку...Загрузка корзины</div>
+        <a class="header__cart" href="cart.html" aria-label="Корзина с товарами" v-else>
           <svg width="19" height="24">
             <use xlink:href="#icon-cart"></use>
           </svg>
-          <span class="header__count" aria-label="Количество товаров">3</span>
+          <span class="header__count" aria-label="Количество товаров">{{ getCountProducts }}</span>
         </a>
       </div>
     </header>
-    <!-- <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav> -->
     <router-view/>
     <footer class="footer container">
       <div class="footer__wrapper">
@@ -121,6 +118,36 @@
     </footer>
   </div>
 </template>
+
+<script>
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+
+export default {
+  data () {
+    return {
+      cartLoading: true
+    }
+  },
+  created () {
+    this.cartLoading = true
+    const userAccessKey = localStorage.getItem('userAccessKey')
+    if (userAccessKey) {
+      this.updateUserAccessKey(userAccessKey)
+    }
+    (async () => {
+      await this.loadCart()
+      this.cartLoading = false
+    })()
+  },
+  methods: {
+    ...mapActions(['loadCart']),
+    ...mapMutations(['updateUserAccessKey'])
+  },
+  computed: {
+    ...mapGetters(['getCountProducts'])
+  }
+}
+</script>
 
 <style>
 </style>
