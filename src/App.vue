@@ -17,12 +17,12 @@
         </a>
 
         <div class="loader" v-if="cartLoading">Минутку...Загрузка корзины</div>
-        <a class="header__cart" href="cart.html" aria-label="Корзина с товарами" v-else>
+        <router-link class="header__cart" :to="{ name: 'cart' }" aria-label="Корзина с товарами" v-else>
           <svg width="19" height="24">
             <use xlink:href="#icon-cart"></use>
           </svg>
           <span class="header__count" aria-label="Количество товаров">{{ getCountProducts }}</span>
-        </a>
+        </router-link>
       </div>
     </header>
     <router-view/>
