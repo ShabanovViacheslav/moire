@@ -51,7 +51,7 @@ import { mapActions } from 'vuex'
 export default {
   props: ['product'],
   methods: {
-    ...mapActions(['deleteCartProduct']),
+    ...mapActions('ModuleCart', ['deleteCartProduct', 'updateCartProductAmount']),
     nameColor (product) {
       const colors = [{ id: 20, name: 'красный' }, { id: 21, name: 'синий' }, { id: 22, name: 'зеленый' }, { id: 23, name: 'желтый' }, { id: 24, name: 'фиолетовый' }, { id: 25, name: 'розовый' }, { id: 26, name: 'черный' }, { id: 27, name: 'белый' }]
       return colors.find(item => item.id === product.colorId).name
@@ -63,7 +63,7 @@ export default {
         return this.product.quantity
       },
       set (value) {
-        this.$store.dispatch('updateCartProductAmount', { basketItemId: this.product.itemId, quantity: value })
+        this.updateCartProductAmount({ basketItemId: this.product.itemId, quantity: value })
       }
     }
   }

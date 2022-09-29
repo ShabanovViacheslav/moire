@@ -143,7 +143,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addProductToCart']),
+    ...mapActions({ addProductToCart: 'ModuleCart/addProductToCart' }),
     loadProduct () {
       this.productLoading = true
       this.productLoadingFailed = false

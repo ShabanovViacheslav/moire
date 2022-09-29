@@ -59,7 +59,7 @@ export default {
       return this.getCountProducts
     },
     products () {
-      return this.$store.state.cartProducts
+      return this.$store.state.ModuleCart.cartProducts
     }
   },
   mixins: [amountProductMixin],

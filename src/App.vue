@@ -140,7 +140,7 @@ export default {
     })()
   },
   methods: {
-    ...mapActions(['loadCart']),
+    ...mapActions({ loadCart: 'ModuleCart/loadCart' }),
     ...mapMutations(['updateUserAccessKey'])
   },
   computed: {
