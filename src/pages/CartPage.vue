@@ -38,9 +38,7 @@
             Итого: <span>{{ getTotalCost }} ₽</span>
           </p>
 
-          <button class="cart__button button button--primery" type="submit">
-            Оформить заказ
-          </button>
+          <router-link class="cart__button button button--primery" :to="{ name: 'order' }" type="submit" :disabled="!getTotalCost" tag="button">Оформить заказ</router-link>
         </div>
       </form>
     </section>

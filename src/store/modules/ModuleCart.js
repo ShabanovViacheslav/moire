@@ -38,6 +38,10 @@ export default {
         item.quantity = quantity
         item.totalPrice = quantity * item.price
       }
+    },
+    resetCart (state) {
+      state.cartProducts = []
+      state.cartProductsData = []
     }
   },
   actions: {

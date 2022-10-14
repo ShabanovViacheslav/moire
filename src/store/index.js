@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import ModuleCart from '@/store/modules/ModuleCart'
+import ModuleOrder from '@/store/modules/ModuleOrder'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: { ModuleCart },
+  modules: { ModuleCart, ModuleOrder },
   state: {
     userAccessKey: null
   },
