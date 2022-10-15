@@ -35,7 +35,7 @@
             Мы&nbsp;посчитаем стоимость доставки на&nbsp;следующем этапе
           </p>
           <p class="cart__price">
-            Итого: <span>{{ getTotalCost }} ₽</span>
+            Итого: <span>{{ getTotalCost | numberFormat }} ₽</span>
           </p>
 
           <router-link class="cart__button button button--primery" :to="{ name: 'order' }" type="submit" :disabled="!getTotalCost" tag="button">Оформить заказ</router-link>
@@ -50,6 +50,7 @@
 import amountProductMixin from '@/mixins/amountProductMixin'
 import { mapGetters } from 'vuex'
 import CartItem from '@/components/Cart/CartItem.vue'
+import numberFormat from '@/filters/numberFormat'
 export default {
   computed: {
     ...mapGetters(['getCountProducts', 'getTotalCost']),
@@ -61,7 +62,8 @@ export default {
     }
   },
   mixins: [amountProductMixin],
-  components: { CartItem }
+  components: { CartItem },
+  filters: { numberFormat }
 }
 </script>
 

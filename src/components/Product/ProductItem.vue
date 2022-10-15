@@ -11,7 +11,7 @@
     </h3>
 
     <span class="catalog__price">
-      {{ product.price }} ₽
+      {{ product.price | numberFormat }} ₽
     </span>
 
     <ul class="colors colors--black">
@@ -27,8 +27,10 @@
 </template>
 
 <script>
+import numberFormat from '@/filters/numberFormat'
 export default {
-  props: ['product']
+  props: ['product'],
+  filters: { numberFormat }
 }
 </script>
 

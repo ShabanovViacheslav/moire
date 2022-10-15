@@ -59,8 +59,8 @@
           </ul>
 
           <div class="cart__total">
-            <p>Доставка: <b>бесплатно</b></p>
-            <p>Итого: <b>{{ getCountProducts }}</b> {{ noun }} на сумму <b>{{ getTotalCost }} ₽</b></p>
+            <p>Доставка: <b v-show="orderData.deliveryTypeId">{{ costDelivery }}</b></p>
+            <p>Итого: <b>{{ getCountProducts }}</b> {{ noun }} на сумму <b>{{ getTotalCost | numberFormat }} ₽</b></p>
           </div>
 
           <button class="cart__button button button--primery" type="submit">
@@ -87,6 +87,7 @@ import FormTextarea from '@/components/Form/FormTextarea.vue'
 import { API_BASE_URL } from '@/config'
 import axios from 'axios'
 import FormRadio from '@/components/Form/FormRadio.vue'
+import numberFormat from '@/filters/numberFormat'
 export default {
   components: { OrderItem, FormText, FormTextarea, FormRadio },
   computed: {
@@ -96,6 +97,13 @@ export default {
     },
     products () {
       return this.$store.state.ModuleCart.cartProducts
+    },
+    costDelivery () {
+      if (!this.orderData.deliveryTypeId) {
+        return
+      }
+      const cost = this.deliveryData.find(item => item.id === this.orderData.deliveryTypeId)
+      return cost.price === '0' ? 'бесплатно' : cost.price
     }
   },
   mixins: [amountProductMixin],
@@ -150,7 +158,7 @@ export default {
             })
             this.resetCart()
             this.updateOrderInfo(response.data)
-            // this.$router.push({ name: 'orderInfo', params: { id: response.data.id } });
+            this.$router.replace({ name: 'orderInfo', params: { id: response.data.id } })
           } catch (error) {
             this.errorData = error.response.data.error.request || {}
             this.formErrorMessage = error.response.data.error.message
@@ -166,7 +174,8 @@ export default {
   },
   watch: {
     'orderData.deliveryTypeId': 'loadPaymentsOptions'
-  }
+  },
+  filters: { numberFormat }
 }
 </script>
 

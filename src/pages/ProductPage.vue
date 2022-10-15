@@ -63,7 +63,7 @@
               </div>
 
               <b class="item__price">
-                {{ productData.price }} ₽
+                {{ productData.price | numberFormat }} ₽
               </b>
             </div>
 
@@ -127,6 +127,7 @@ import { API_BASE_URL } from '@/config'
 import ProductInfo from '@/components/Product/ProductInfo.vue'
 import ProductDelivery from '@/components/Product/ProductDelivery.vue'
 import { mapActions } from 'vuex'
+import numberFormat from '@/filters/numberFormat'
 export default {
   data () {
     return {
@@ -188,7 +189,8 @@ export default {
     onView () {
       return Boolean(this.selectedColor) && Boolean(this.selectedSize)
     }
-  }
+  },
+  filters: { numberFormat }
 }
 </script>
 

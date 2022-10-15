@@ -35,7 +35,7 @@
     </div>
 
     <b class="product__price">
-      {{ product.totalPrice }} ₽
+      {{ product.totalPrice | numberFormat }} ₽
     </b>
 
     <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины" @click.prevent="deleteCartProduct({basketItemId: product.itemId})">
@@ -48,6 +48,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import numberFormat from '@/filters/numberFormat'
 export default {
   props: ['product'],
   methods: {
@@ -66,7 +67,8 @@ export default {
         this.updateCartProductAmount({ basketItemId: this.product.itemId, quantity: value })
       }
     }
-  }
+  },
+  filters: { numberFormat }
 }
 </script>
 

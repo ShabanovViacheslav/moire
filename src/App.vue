@@ -30,9 +30,7 @@
       <div class="footer__wrapper">
         <ul class="footer__links">
           <li>
-            <a class="footer__link" href="#">
-              Каталог
-            </a>
+            <router-link class="footer__link" :to="{ name: 'home' }">Каталог</router-link>
           </li>
           <li>
             <a class="footer__link" href="tel:88006009009">
