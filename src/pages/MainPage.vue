@@ -18,6 +18,14 @@
       </aside>
 
       <section class="catalog">
+        <div class="block">
+          <p class="block__text form__legend">Количество карточек товара:</p>
+          <p class="block__text">
+            <button class="block__button" @click.prevent="setProductsPerPage(1)">1</button>
+            <button class="block__button" @click.prevent="setProductsPerPage(2)">2</button>
+            <button class="block__button" @click.prevent="setProductsPerPage(3)">3</button>
+          </p>
+        </div>
         <div class="loader" v-if="productsLoading">Минутку...Загрузка товара</div>
         <div v-else-if="productsLoadingFailed">Ой...не удалось загрузить каталог</div>
         <div v-else-if="productsData">
@@ -48,7 +56,7 @@ export default {
       filterSeasonIds: [],
       filterColorIds: [],
       page: 1,
-      productsPerPage: 3,
+      productsPerPage: 1,
       filterMinPrice: 0,
       filterMaxPrice: 0,
       productsLoading: false,
@@ -89,6 +97,9 @@ export default {
           }
         })()
       }, 500)
+    },
+    setProductsPerPage (number) {
+      this.productsPerPage = number
     }
   },
   watch: {
@@ -110,6 +121,9 @@ export default {
     filterMinPrice () {
       this.loadProductsData()
     },
+    productsPerPage () {
+      this.loadProductsData()
+    },
     filterMaxPrice () {
       this.loadProductsData()
     }
@@ -124,11 +138,22 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.block {
+  margin: 0 auto;
+  &__text {
+  text-align: center;
+  }
+  &__button {
+    margin: 0 5px;
+    cursor: pointer;
+  }
+}
+
 .colors__value {
   border: 1px solid black;
 }
- .loader {
+.loader {
   color: #e02d71;
   font-size: 20px;
   text-indent: -9999em;
