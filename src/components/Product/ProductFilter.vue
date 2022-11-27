@@ -34,37 +34,9 @@
     </ul>
   </fieldset>
 
-  <!-- <BaseFormCheck :data="materialsData" name="Материал" v-model.number="selectedMaterials"/> -->
+  <BaseFormCheck :data="materialsData" name="Материал" @input="selectedMaterials = $event" :signal.sync="modifierMaterial"/>
 
-  <fieldset class="form__block">
-    <legend class="form__legend">Материал</legend>
-    <ul class="check-list">
-      <li class="check-list__item" v-for="material in materialsData" :key="material.id">
-        <label class="check-list__label">
-          <input class="check-list__check sr-only" type="checkbox" name="material" :value="material.id" v-model.number="selectedMaterials">
-          <span class="check-list__desc">
-            {{ material.title }}
-            <span>({{ material.productsCount }})</span>
-          </span>
-        </label>
-      </li>
-    </ul>
-  </fieldset>
-
-  <fieldset class="form__block">
-    <legend class="form__legend">Коллекция</legend>
-    <ul class="check-list">
-      <li class="check-list__item" v-for="season in seasonsData" :key="season.id">
-        <label class="check-list__label">
-          <input class="check-list__check sr-only" type="checkbox" name="collection" :value="season.id" v-model.number="selectedSeasons">
-          <span class="check-list__desc">
-            {{ season.title }}
-            <span>({{ season.productsCount }})</span>
-          </span>
-        </label>
-      </li>
-    </ul>
-  </fieldset>
+  <BaseFormCheck :data="seasonsData" name="Коллекция" @input="selectedSeasons = $event" :signal.sync="modifierSeason"/>
 
   <button class="filter__submit button button--primery" type="submit">
     Применить
@@ -78,7 +50,7 @@
 <script>
 import axios from 'axios'
 import { API_BASE_URL } from '@/config'
-// import BaseFormCheck from '@/components/Base/BaseFormCheck.vue'
+import BaseFormCheck from '@/components/Base/BaseFormCheck.vue'
 export default {
   props: ['category', 'materials', 'seasons', 'colors', 'minPrice', 'maxPrice'],
   data () {
@@ -89,7 +61,9 @@ export default {
       colorsData: [],
       selectedCategory: 0,
       selectedMaterials: [],
+      modifierMaterial: 0,
       selectedSeasons: [],
+      modifierSeason: 0,
       selectedColors: [],
       selectedMinPrice: 0,
       selectedMaxPrice: 0
@@ -159,6 +133,8 @@ export default {
       if (this.selectedMinPrice) this.selectedMinPrice = 0
       if (this.selectedMaxPrice) this.selectedMaxPrice = 0
       if (this.selectedCategory) this.selectedCategory = 0
+      if (!this.modifierMaterial) this.modifierMaterial = 1
+      if (!this.modifierSeason) this.modifierSeason = 1
     }
   },
   watch: {
@@ -187,8 +163,8 @@ export default {
     this.getSeasons()
     this.getColors()
     this.selectedCategory = this.category
-  }
-  // components: { BaseFormCheck }
+  },
+  components: { BaseFormCheck }
 }
 </script>
 

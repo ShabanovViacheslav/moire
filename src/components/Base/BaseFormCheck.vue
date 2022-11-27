@@ -4,7 +4,7 @@
     <ul class="check-list">
       <li class="check-list__item" v-for="item in data" :key="item.id">
         <label class="check-list__label">
-          <input class="check-list__check sr-only" type="checkbox" :name="name" :value="item.id" @input="$emit('input', $event.target.value)">
+          <input class="check-list__check sr-only" type="checkbox" :name="name" :value="item.id" v-model="object">
           <span class="check-list__desc">
             {{ item.title }}
             <span>({{ item.productsCount }})</span>
@@ -17,29 +17,27 @@
 
 <script>
 export default {
+  data () {
+    return {
+      object: []
+    }
+  },
   props: {
     data: Array,
     name: String,
-    value: {
-      type: Array,
-      default: () => []
+    signal: Number
+  },
+  watch: {
+    object () {
+      this.$emit('input', this.object)
+      this.$emit('update:signal', 0)
+    },
+    signal () {
+      if (this.signal) {
+        this.object = []
+      }
     }
   }
-  // methods: {
-  //   addValue (event) {
-  //     this.value.push(event.target.value)
-  //   }
-  // }
-  // computed: {
-  //   dataValue: {
-  //     get () {
-  //       return this.value
-  //     },
-  //     set (value) {
-  //       this.$emit('input', value)
-  //     }
-  //   }
-  // }
 }
 </script>
 
