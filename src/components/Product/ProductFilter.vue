@@ -41,7 +41,7 @@
   <button class="filter__submit button button--primery" type="submit">
     Применить
   </button>
-  <button class="filter__reset button button--second" type="button" @click.prevent="reset" :disabled="!onView">
+  <button class="filter__reset button button--second" type="button" @click.prevent="reset" v-show="onView">
     Сбросить
   </button>
 </form>

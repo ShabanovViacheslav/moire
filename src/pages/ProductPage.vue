@@ -21,19 +21,15 @@
     <section class="item" v-else-if="productData">
       <div class="item__pics pics">
         <div class="pics__wrapper">
-          <img width="570" height="570" :src="productData.colors[0].gallery[0].file.url" v-if="productData.colors[0].gallery" :alt="productData.title">
+          <img width="570" height="570" :src="urlImage" v-if="urlImage" :alt="productData.title">
           <p class="catalog__alt" v-else>Извините, изображение товара отсутсвует</p>
         </div>
         <ul class="pics__list">
-          <li class="pics__item">
-            <a href="" class="pics__link pics__link--current">
-              <img width="98" height="98" src="img/product-square-2.jpg" srcset="img/product-square-2@2x.jpg 2x" alt="Название товара">
+          <li class="pics__item" v-for="product in productData.colors" :key="product.id">
+            <a href="" class="pics__link pics__link--current" v-if="product.gallery">
+              <img width="98" height="98" :src="product.gallery[0].file.url" alt="Название товара">
             </a>
-          </li>
-          <li class="pics__item">
-            <a href="" class="pics__link">
-              <img width="98" height="98" src="img/product-square-3.jpg" srcset="img/product-square-3@2x.jpg 2x" alt="Название товара">
-            </a>
+            <p class="catalog__alt" v-else>Извините, изображение товара отсутсвует</p>
           </li>
         </ul>
       </div>
@@ -73,7 +69,7 @@
                 <ul class="colors colors--black">
                   <li class="colors__item" v-for="color in productData.colors" :key="color.id">
                     <label class="colors__label">
-                      <input class="colors__radio sr-only" type="radio" name="color-item" :value="color.color.id" v-model.number="selectedColor">
+                      <input class="colors__radio sr-only" type="radio" name="color-item" :value="color" v-model.number="valuesObject">
                       <span class="colors__value" :style="{backgroundColor: color.color.code}">
                       </span>
                     </label>
@@ -140,7 +136,9 @@ export default {
       currentTab: ProductInfo,
       tabs: [ProductInfo, ProductDelivery],
       productAdded: false,
-      productAddSending: false
+      productAddSending: false,
+      urlImage: '',
+      valuesObject: {}
     }
   },
   methods: {
@@ -153,6 +151,11 @@ export default {
           try {
             const response = await axios.get(`${API_BASE_URL}products/${this.$route.params.id}`)
             this.productData = response.data
+            this.selectedColor = response.data.colors[0].color.id
+            this.selectedSize = response.data.sizes[0].id
+            if (response.data.colors[0].gallery) {
+              this.urlImage = response.data.colors[0].gallery[0].file.url
+            }
             this.productLoading = false
           } catch (error) {
             this.productLoading = false
@@ -182,6 +185,12 @@ export default {
         this.loadProduct()
       },
       immediate: true
+    },
+    valuesObject () {
+      this.selectedColor = this.valuesObject.color.id
+      if (this.valuesObject.gallery) {
+        this.urlImage = this.valuesObject.gallery[0].file.url
+      } else this.urlImage = ''
     }
   },
   components: { ProductInfo, ProductDelivery },

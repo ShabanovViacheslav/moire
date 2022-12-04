@@ -1,6 +1,6 @@
 <template>
   <li class="options__item">
-    <FormOption :title="title" :error="error" :price="price">
+    <FormOption :title="title" :price="price">
       <input class="options__radio sr-only" @change="$emit('change', $event.target.value)" :type="type" :name="name" :value="value">
     </FormOption>
   </li>

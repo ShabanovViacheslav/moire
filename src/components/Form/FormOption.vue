@@ -7,12 +7,11 @@
     <span class="options__value" v-else>
       {{ title }} <b>{{ price }}</b>
     </span>
-    <span class="form__error" v-if="error">{{ error }}</span>
   </label>
 </template>
 
 <script>
 export default {
-  props: ['title', 'error', 'price']
+  props: ['title', 'price']
 }
 </script>

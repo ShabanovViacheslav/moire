@@ -42,13 +42,15 @@
 
           <div class="cart__options">
             <h3 class="cart__title">Доставка</h3>
-            <ul class="cart__options options">
-              <FormRadio v-for="option in deliveryData" :key="option.id" :title="option.title" :error="errorData.deliveryTypeId" v-model.number="orderData.deliveryTypeId" name="delivery" :price="option.price" :value="option.id" />
+            <ul class="cart__options options" style="position: relative">
+              <FormRadio v-for="option in deliveryData" :key="option.id" :title="option.title" v-model.number="orderData.deliveryTypeId" name="delivery" :price="option.price" :value="option.id" />
+              <span class="form__error" v-if="errorData.deliveryTypeId">{{ errorData.deliveryTypeId }}</span>
             </ul>
 
             <h3 class="cart__title">Оплата</h3>
-            <ul class="cart__options options" v-show="paymentsData">
-              <FormRadio v-for="option in paymentsData" :key="option.id" :title="option.title" :error="errorData.paymentTypeId" v-model.number="orderData.paymentTypeId" name="pay" :value="option.id" />
+            <ul class="cart__options options" v-show="paymentsData" style="position: relative">
+              <FormRadio v-for="option in paymentsData" :key="option.id" :title="option.title" v-model.number="orderData.paymentTypeId" name="pay" :value="option.id" />
+              <span class="form__error" v-if="errorData.paymentTypeId">{{ errorData.paymentTypeId }}</span>
             </ul>
           </div>
         </div>

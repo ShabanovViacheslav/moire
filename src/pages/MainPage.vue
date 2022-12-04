@@ -21,9 +21,9 @@
         <div class="block">
           <p class="block__text form__legend">Количество карточек товара:</p>
           <p class="block__text">
-            <button class="block__button" @click.prevent="setProductsPerPage(1)">1</button>
-            <button class="block__button" @click.prevent="setProductsPerPage(2)">2</button>
-            <button class="block__button" @click.prevent="setProductsPerPage(3)">3</button>
+            <button class="block__button" @click.prevent="setProductsPerPage(4)">4</button>
+            <button class="block__button" @click.prevent="setProductsPerPage(6)">6</button>
+            <button class="block__button" @click.prevent="setProductsPerPage(8)">8</button>
           </p>
         </div>
         <div class="loader" v-if="productsLoading">Минутку...Загрузка товара</div>
@@ -56,7 +56,7 @@ export default {
       filterSeasonIds: [],
       filterColorIds: [],
       page: 1,
-      productsPerPage: 1,
+      productsPerPage: 4,
       filterMinPrice: 0,
       filterMaxPrice: 0,
       productsLoading: false,

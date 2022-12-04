@@ -21,7 +21,8 @@ export default {
         quantity: item.quantity,
         price: item.price,
         totalPrice: item.quantity * item.price,
-        img: item.color.gallery ? item.color.gallery[0].file.url : null
+        img: item.color.gallery ? item.color.gallery[0].file.url : null,
+        size: item.size.title
       }))
     },
     deleteCartProduct (state, { basketItemId }) {

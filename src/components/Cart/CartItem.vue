@@ -13,6 +13,10 @@
         <i class="colors__value" :style="{backgroundColor: product.colorCode}"></i>
         {{ nameColor(product) }}
       </span>
+      Размер:
+      <span>
+        {{ product.size }}
+      </span>
     </p>
     <span class="product__code">
       Артикул: {{ product.id }}
@@ -38,7 +42,7 @@
       {{ product.totalPrice | numberFormat }} ₽
     </b>
 
-    <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины" @click.prevent="deleteCartProduct({basketItemId: product.itemId})">
+    <button class="product__del button-del" style="cursor: pointer" type="button" aria-label="Удалить товар из корзины" @click.prevent="deleteCartProduct({basketItemId: product.itemId})">
       <svg width="20" height="20" fill="currentColor">
         <use xlink:href="#icon-close"></use>
       </svg>

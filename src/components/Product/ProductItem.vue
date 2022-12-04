@@ -1,13 +1,12 @@
 <template>
   <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-      <img :src="product.colors[0].gallery[0].file.url" v-if="product.colors[0].gallery" :alt="product.title">
+    <router-link :to="{name: 'product', params: {id: product.id}}" class="catalog__pic">
+      <img :src="urlImage" v-if="urlImage" :alt="product.title">
       <p class="catalog__alt" v-else>Извините, изображение товара отсутсвует</p>
-    </a>
+    </router-link>
 
     <h3 class="catalog__title">
-      <!-- ??????????????????????????????????? Использование params и $route.replace  -->
-      <router-link :to="{name: 'product', params: {id: product.id}}">{{ product.title }}</router-link>
+      {{ product.title }}
     </h3>
 
     <span class="catalog__price">
@@ -17,7 +16,7 @@
     <ul class="colors colors--black">
       <li class="colors__item" v-for="color in product.colors" :key="color.id">
         <label class="colors__label">
-          <input class="colors__radio sr-only" type="radio" :name="color.color.title" :value="color.color.code">
+          <input class="colors__radio sr-only" type="radio" :name="color.color.title" :value="color" v-model="valuesObject">
           <span class="colors__value" :style="{backgroundColor: color.color.code}">
           </span>
         </label>
@@ -30,7 +29,25 @@
 import numberFormat from '@/filters/numberFormat'
 export default {
   props: ['product'],
-  filters: { numberFormat }
+  filters: { numberFormat },
+  data () {
+    return {
+      urlImage: '',
+      valuesObject: {}
+    }
+  },
+  created () {
+    if (this.product.colors[0].gallery) {
+      this.urlImage = this.product.colors[0].gallery[0].file.url
+    }
+  },
+  watch: {
+    valuesObject () {
+      if (this.valuesObject.gallery) {
+        this.urlImage = this.valuesObject.gallery[0].file.url
+      } else this.urlImage = ''
+    }
+  }
 }
 </script>
 
